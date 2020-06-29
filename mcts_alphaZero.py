@@ -183,7 +183,32 @@ class MCTSPlayer(object):
         self.mcts.update_with_move(-1)
 
     def get_action(self, board, temp=1e-3, return_prob=0):
-        sensible_moves = board.availables
+        #
+        if(board.current_player==1):
+            sensible_moves = board.availables
+        else:
+            sensible_moves = board.availables
+            #case1:line
+            if (board.square_state[0][1*8+6]==1 and\ 
+            board.square_state[0][2*8+5]==1 and\
+            board.square_state[0][4*8+3]==1 and\
+            board.square_state[0][5*8+2]==1 and\
+            board.square_state[0][6*8+1]==1
+            ):
+                sensible_moves.remove(3*8+4)
+            #case2:3-3
+            tmp=board.square_state[0]
+            tmp=np.flatnonzero(tmp)
+            for all_loc in sensible_moves:
+                if(((all_loc//8)>=2) and ((all_loc%8)>=2)):
+                    if(((all_loc-1) in tmp) and ((all_loc-2) in tmp) and ((all_loc-8) in tmp) and ((all_loc-16) in tmp)):
+                        sensible_moves.remove(all_loc)
+            #case3:
+            for all_loc in sensible_moves:
+                if (((all_loc//8)>=0) and ((all_loc%8)>=1)):
+                    if(((all_loc-8) in tmp) and ((all_loc+1) in tmp) and ((all_loc+2) in tmp) and ((all_loc+3) in tmp) and ((all_loc+8) in tmp) and ((all_loc+16) in tmp)):
+                        sensible_moves.remove(all_loc)
+
         # the pi vector returned by MCTS as in the alphaGo Zero paper
         move_probs = np.zeros(board.width*board.height)
         if len(sensible_moves) > 0:
