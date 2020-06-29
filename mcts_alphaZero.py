@@ -187,7 +187,7 @@ class MCTSPlayer(object):
         if(board.current_player==1):
             sensible_moves = board.availables
         else:
-            now_state=board.current_state
+            now_state=board.current_state()
             sensible_moves = board.availables
             #case1:line
             if (now_state[0][1*8+6]==1 and now_state[0][2*8+5]==1 and\
