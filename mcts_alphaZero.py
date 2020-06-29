@@ -189,13 +189,13 @@ class MCTSPlayer(object):
         else:
             now_state=board.current_state()
             sensible_moves = board.availables
-            #case1:line
-            if (now_state[0][1,6]==1 and now_state[0][2,5]==1 and\
-            now_state[0][4,3]==1 and\
-            now_state[0][5,2]==1 and\
-            now_state[0][6,1]==1
-            ):
-                sensible_moves.remove(3*8+4)
+            # #case1:line
+            # if (now_state[0][1,6]==1 and now_state[0][2,5]==1 and\
+            # now_state[0][4,3]==1 and\
+            # now_state[0][5,2]==1 and\
+            # now_state[0][6,1]==1
+            # ):
+            #     sensible_moves.remove(3*8+4)
             #case2:3-3
             tmp=now_state[0]
             tmp=np.flatnonzero(tmp)
